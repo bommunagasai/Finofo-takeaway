@@ -15,7 +15,7 @@ const FruitsChart: React.FC<FruitsChartOptions> = ({
         <Flex ref={elementRef} minWidth='max-content' alignItems='center' justifyContent='center'>
             {jarItemsList.length ?
                 <PieChart
-                    width={(dimensions?.contentBox?.width || 0) * .8}
+                    width={(dimensions?.contentBox?.width || 0)}
                     height={(dimensions?.contentBox?.width || 0) * .5}
                     data={jarItemsList.map(v => ({ name: v.name, value: v.totalCalories }))}
                 /> : null}
