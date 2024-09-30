@@ -106,6 +106,7 @@ const Home: React.FC = () => {
                     }}
                     isListLayout={isListLayout}
                     handleSelectLayout={handleSelectLayout}
+                    isDesktop={isDesktop}
                 />
                 {!isDesktop ? (
                     <>
@@ -148,7 +149,7 @@ const Home: React.FC = () => {
                             handleAction={handleAction}
                             headData={headData}
                             manipulatedData={manipulatedData}
-                            isListLayout={isListLayout}
+                            isListLayout={isDesktop ? isListLayout : true}
                         />)
                 }
             </Box>
