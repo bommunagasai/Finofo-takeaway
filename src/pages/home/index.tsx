@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from "react";
-import { Box, Button, ButtonGroup, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Grid, GridItem, IconButton, Text, useBoolean, useDisclosure, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Grid, GridItem, IconButton, Text, useBoolean, useDisclosure, useMediaQuery, useToast } from "@chakra-ui/react";
 
 import useFetch from "../../hooks/useFetch";
 import useDataGroupBy from "../../hooks/useDataGroupBy";
@@ -14,6 +14,16 @@ import Toolbar from "./elements/toolbar";
 import { ViewIcon } from "@chakra-ui/icons";
 
 const Home: React.FC = () => {
+    const toast = useToast();
+    const showToast = (text: string) => {
+        toast({
+            render: () => (
+                <Box borderWidth='1px' borderRadius='lg' borderColor='gray.400' p='4' bg='white'>
+                    <Text fontFamily={'monospace'} fontSize='md'>{text}</Text>
+                </Box>
+            ),
+        })
+    }
     const { isFetching, data = [], error, fetch } = useFetch({
         method: 'get',
         url: '/api/fruit/all',
@@ -46,6 +56,7 @@ const Home: React.FC = () => {
         } else {
             setFlag.on();
         }
+        showToast('Layout changed!')
     };
 
     const [groupBy, setGroupBy] = useState(GROUP_BY_LIST[0]);
@@ -54,15 +65,18 @@ const Home: React.FC = () => {
     const { jarItems, addItemInJar, removeItemInJar } = useJar();
     const handleAction = (action: string, data: any) => {
         if (action === 'add') {
-            addItemInJar(data.id)
+            addItemInJar(data.id);
+            showToast(`${data.name} is added to Jar!`);
         } else if (action == 'delete') {
-            removeItemInJar(data.id)
+            removeItemInJar(data.id);
+            showToast(`${data.name} is removed from Jar!`);
         };
     };
     const handleBulkAddItemsToJar = (items: Array<object>) => {
         items.forEach((v: any) => {
             addItemInJar(v.id)
         });
+        showToast(`${items.length} fruit${items.length > 1 ? 's' : ''} added to Jar!`);
     };
     const jarItemsList: Array<any> = useMemo(() => {
         let itemsList: Array<object> = [];
@@ -84,10 +98,12 @@ const Home: React.FC = () => {
     const btnRef: any = useRef()
     return <Grid templateColumns={isDesktop ? 'repeat(9, 1fr)' : 'repeat(5, 1fr)'} p='4' gap='4'>
         <GridItem colSpan={5}>
-
             <Flex alignItems={'center'} justifyContent={'flex-end'} gap='2' wrap={'wrap'}>
                 <Toolbar
-                    setGroupBy={setGroupBy}
+                    setGroupBy={v => {
+                        setGroupBy(v);
+                        showToast('Group by changed!');
+                    }}
                     isListLayout={isListLayout}
                     handleSelectLayout={handleSelectLayout}
                 />
