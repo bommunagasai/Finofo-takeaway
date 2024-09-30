@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from "react";
-import { Box, Button, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Grid, GridItem, Text, useBoolean, useDisclosure, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Grid, GridItem, IconButton, Text, useBoolean, useDisclosure, useMediaQuery } from "@chakra-ui/react";
 
 import useFetch from "../../hooks/useFetch";
 import useDataGroupBy from "../../hooks/useDataGroupBy";
@@ -11,6 +11,7 @@ import { GROUP_BY_LIST, headData } from "./constants";
 import Loader from "./elements/loader";
 import ErrorWidget from "./elements/error-widget";
 import Toolbar from "./elements/toolbar";
+import { ViewIcon } from "@chakra-ui/icons";
 
 const Home: React.FC = () => {
     const { isFetching, data = [], error, fetch } = useFetch({
@@ -84,7 +85,7 @@ const Home: React.FC = () => {
     return <Grid templateColumns={isDesktop ? 'repeat(9, 1fr)' : 'repeat(5, 1fr)'} p='4' gap='4'>
         <GridItem colSpan={5}>
 
-            <Flex alignItems={'center'} justifyContent={'flex-end'} gap='2'>
+            <Flex alignItems={'center'} justifyContent={'flex-end'} gap='2' wrap={'wrap'}>
                 <Toolbar
                     setGroupBy={setGroupBy}
                     isListLayout={isListLayout}
@@ -92,9 +93,12 @@ const Home: React.FC = () => {
                 />
                 {!isDesktop ? (
                     <>
-                        <Button ref={btnRef} size='sm' variant='outline' colorScheme='blackAlpha' onClick={onOpen}>
-                            Jar: {jarItemsList.length} fruits
-                        </Button>
+                        <ButtonGroup size='sm' isAttached variant='outline' ref={btnRef} onClick={onOpen}>
+                            <Button size='sm' variant='outline' >
+                                Jar: {jarItemsList.length} fruits
+                            </Button>
+                            <IconButton aria-label='Add to friends' icon={<ViewIcon />} />
+                        </ButtonGroup>
                         <Drawer
                             isOpen={isOpen}
                             placement='right'

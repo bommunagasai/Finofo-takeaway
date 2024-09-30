@@ -46,7 +46,6 @@ const FriutsList: React.FC<FriutsListOptions> = ({
     manipulatedData,
     isListLayout,
 }) => {
-    console.log({ groupedData })
     return (
         GROUP_BY_LIST.indexOf(groupBy) > 0 ? (<Accordion>
             {Object.entries(groupedData).map(([key, value]) => (
@@ -79,7 +78,9 @@ const FriutsList: React.FC<FriutsListOptions> = ({
                     </h2>
                     <AccordionPanel pb={4}>
                         {
-                            isListLayout ? <List list={value.map((d: any) => (<GetListItem data={d} handleAction={handleAction} />))} />
+                            isListLayout ? <Box borderWidth='1px' borderRadius='lg' py='4' px='6'>
+                                <List list={value.map((d: any) => (<GetListItem data={d} handleAction={handleAction} />))} />
+                            </Box>
                                 : <Table
                                     headData={headData.filter(v => v.key != groupBy)}
                                     bodyData={value}
@@ -91,7 +92,9 @@ const FriutsList: React.FC<FriutsListOptions> = ({
             ))}
         </Accordion>
         ) : (
-            isListLayout ? <List list={manipulatedData.map(d => (<GetListItem data={d} handleAction={handleAction} />))} />
+            isListLayout ? <Box borderWidth='1px' borderRadius='lg' py='4' px='6'>
+                <List list={manipulatedData.map(d => (<GetListItem data={d} handleAction={handleAction} />))} />
+            </Box>
                 : <Table
                     headData={headData}
                     bodyData={manipulatedData}
