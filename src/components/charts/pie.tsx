@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import * as d3 from "d3";
-import styles from "./pie.css";
+import styles from "./pie.module.css";
 
 type DataItem = {
   name: string;
@@ -30,7 +30,7 @@ const colors = [
 ];
 
 const PieChart = ({ width, height, data }: PieChartProps) => {
-  const ref = useRef(null);
+  const ref: any = useRef(null);
 
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2;
 
@@ -50,7 +50,7 @@ const PieChart = ({ width, height, data }: PieChartProps) => {
       endAngle: grp.endAngle,
     };
     const centroid = arcGenerator.centroid(sliceInfo);
-    const slicePath = arcGenerator(sliceInfo);
+    const slicePath: any = arcGenerator(sliceInfo);
 
     // Second arc is for the legend inflexion point
     const inflexionInfo = {

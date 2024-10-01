@@ -46,5 +46,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://www.fruityvice.com"
+  "proxy": "https://www.fruityvice.com",
+  "devDependencies": {
+    "@types/d3": "^7.4.3"
+  }
 }
