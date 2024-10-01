@@ -94,7 +94,7 @@ const Home: React.FC = () => {
         return itemsList;
     }, [Object.keys(jarItems).length, Object.values(jarItems).reduce((acc, current) => (acc) + (current), 0)]);
     const [isDesktop] = useMediaQuery('(min-width: 1200px)');
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef: any = useRef()
     return <Grid templateColumns={isDesktop ? 'repeat(9, 1fr)' : 'repeat(5, 1fr)'} p='4' gap='4'>
         <GridItem colSpan={5}>
